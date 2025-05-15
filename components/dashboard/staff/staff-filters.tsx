@@ -11,88 +11,88 @@ export default function StaffFilters() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Label htmlFor="role" className="mb-2 block">
-            Vai trò
+            Vai trò
           </Label>
           <Select>
             <SelectTrigger id="role">
-              <SelectValue placeholder="Tất cả vai trò" />
+              <SelectValue placeholder="Tất cả vai trò" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tất cả vai trò</SelectItem>
-              <SelectItem value="admin">Quản trị viên</SelectItem>
-              <SelectItem value="manager">Quản lý</SelectItem>
-              <SelectItem value="agent">Nhân viên</SelectItem>
+              <SelectItem value="all">Tất cả vai trò</SelectItem>
+              <SelectItem value="admin">Quản trị viên</SelectItem>
+              <SelectItem value="manager">Quản lý</SelectItem>
+              <SelectItem value="agent">Nhân viên</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div>
           <Label htmlFor="department" className="mb-2 block">
-            Phòng ban
+            Phòng ban
           </Label>
           <Select>
             <SelectTrigger id="department">
-              <SelectValue placeholder="Tất cả phòng ban" />
+              <SelectValue placeholder="Tất cả phòng ban" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tất cả phòng ban</SelectItem>
-              <SelectItem value="management">Quản lý</SelectItem>
+              <SelectItem value="all">Tất cả phòng ban</SelectItem>
+              <SelectItem value="management">Quản lý</SelectItem>
               <SelectItem value="customer-service">CSKH</SelectItem>
-              <SelectItem value="sales">Bán hàng</SelectItem>
+              <SelectItem value="sales">Bán hàng</SelectItem>
               <SelectItem value="marketing">Marketing</SelectItem>
-              <SelectItem value="technical">Kỹ thuật</SelectItem>
+              <SelectItem value="technical">Kỹ thuật</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div>
           <Label htmlFor="status" className="mb-2 block">
-            Trạng thái
+            Trạng thái
           </Label>
           <Select>
             <SelectTrigger id="status">
-              <SelectValue placeholder="Tất cả trạng thái" />
+              <SelectValue placeholder="Tất cả trạng thái" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tất cả trạng thái</SelectItem>
-              <SelectItem value="active">Đang hoạt động</SelectItem>
-              <SelectItem value="inactive">Không hoạt động</SelectItem>
+              <SelectItem value="all">Tất cả trạng thái</SelectItem>
+              <SelectItem value="active">Đang hoạt động</SelectItem>
+              <SelectItem value="inactive">Không hoạt động</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
 
       <div className="mt-4">
-        <Label className="mb-2 block">Quyền truy cập</Label>
+        <Label className="mb-2 block">Quyền truy cập</Label>
         <RadioGroup defaultValue="all" className="flex flex-wrap gap-4">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all" id="all" />
             <Label htmlFor="all" className="font-normal">
-              Tất cả
+              Tất cả
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="conversations" id="conversations" />
             <Label htmlFor="conversations" className="font-normal">
-              Hội thoại
+              Hội thoại
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="customers" id="customers" />
             <Label htmlFor="customers" className="font-normal">
-              Khách hàng
+              Khách hàng
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="reports" id="reports" />
             <Label htmlFor="reports" className="font-normal">
-              Báo cáo
+              Báo cáo
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="settings" id="settings" />
             <Label htmlFor="settings" className="font-normal">
-              Cài đặt
+              Cài đặt
             </Label>
           </div>
         </RadioGroup>
@@ -100,9 +100,9 @@ export default function StaffFilters() {
 
       <div className="flex justify-end mt-4 gap-2">
         <Button variant="outline" size="sm">
-          Xóa bộ lọc
+          Xóa bộ lọc
         </Button>
-        <Button size="sm">Áp dụng</Button>
+        <Button size="sm">Áp dụng</Button>
       </div>
     </div>
   )
