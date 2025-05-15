@@ -189,7 +189,9 @@ export default function AISettingsPage() {
                 <Bot className="h-5 w-5 text-blue-600 mr-2" />
                 Cài đặt AI gợi ý trả lời
               </CardTitle>
-              <CardDescription>Tùy chỉnh cách AI gợi ý nội dung trả lời tin nhắn</CardDescription>
+              <CardDescription>
+                Tùy chỉnh cách AI gợi ý nội dung trả lời tin nhắn
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -205,14 +207,17 @@ export default function AISettingsPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="ai-model">Mô hình AI</Label>
-                  <select id="ai-model" className="w-full p-2 border border-gray-300 rounded-md" defaultValue="gpt-4o">
+                  <select
+                    id="ai-model"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    defaultValue="gpt-4o"
+                  >
                     <option value="gpt-4o">GPT-4o (Mặc định)</option>
                     <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
                     <option value="claude-3">Claude 3</option>
                   </select>
                   <p className="text-xs text-gray-500">
-                    Mô hình AI được sử dụng để tạo gợi ý trả lời. Các mô hình khác nhau có thể có chi phí và hiệu suất
-                    khác nhau.
+                    Mô hình AI được sử dụng để tạo gợi ý trả lời. Các mô hình khác nhau có thể có chi phí và hiệu suất khác nhau.
                   </p>
                 </div>
 
@@ -236,14 +241,17 @@ export default function AISettingsPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="language">Ngôn ngữ mặc định</Label>
-                  <select id="language" className="w-full p-2 border border-gray-300 rounded-md" defaultValue="vi">
+                  <select
+                    id="language"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    defaultValue="vi"
+                  >
                     <option value="vi">Tiếng Việt</option>
                     <option value="en">Tiếng Anh</option>
                     <option value="auto">Tự động phát hiện</option>
                   </select>
                   <p className="text-xs text-gray-500">
-                    Ngôn ngữ mặc định cho gợi ý trả lời. Chọn "Tự động phát hiện" để AI tự nhận diện ngôn ngữ của khách
-                    hàng.
+                    Ngôn ngữ mặc định cho gợi ý trả lời. Chọn "Tự động phát hiện" để AI tự nhận diện ngôn ngữ của khách hàng.
                   </p>
                 </div>
 
@@ -261,7 +269,9 @@ export default function AISettingsPage() {
                     <option value="formal">Trang trọng</option>
                     <option value="casual">Thân mật</option>
                   </select>
-                  <p className="text-xs text-gray-500">Giọng điệu mặc định cho gợi ý trả lời.</p>
+                  <p className="text-xs text-gray-500">
+                    Giọng điệu mặc định cho gợi ý trả lời.
+                  </p>
                 </div>
 
                 <div className="space-y-2">
@@ -275,7 +285,9 @@ export default function AISettingsPage() {
                     <option value="medium">Vừa (100-200 ký tự)</option>
                     <option value="long">Dài (200-500 ký tự)</option>
                   </select>
-                  <p className="text-xs text-gray-500">Độ dài tối đa cho mỗi gợi ý trả lời.</p>
+                  <p className="text-xs text-gray-500">
+                    Độ dài tối đa cho mỗi gợi ý trả lời.
+                  </p>
                 </div>
 
                 <Separator />
@@ -330,7 +342,9 @@ export default function AISettingsPage() {
                 <Wand2 className="h-5 w-5 text-blue-600 mr-2" />
                 Mẫu câu trả lời
               </CardTitle>
-              <CardDescription>Quản lý các mẫu câu trả lời được sử dụng thường xuyên</CardDescription>
+              <CardDescription>
+                Quản lý các mẫu câu trả lời được sử dụng thường xuyên
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -437,14 +451,14 @@ export default function AISettingsPage() {
                             {template.category === "general"
                               ? "Chung"
                               : template.category === "greeting"
-                                ? "Chào hỏi"
-                                : template.category === "product"
-                                  ? "Thông tin sản phẩm"
-                                  : template.category === "support"
-                                    ? "Hỗ trợ"
-                                    : template.category === "sales"
-                                      ? "Bán hàng"
-                                      : "Kết thúc"}
+                              ? "Chào hỏi"
+                              : template.category === "product"
+                              ? "Thông tin sản phẩm"
+                              : template.category === "support"
+                              ? "Hỗ trợ"
+                              : template.category === "sales"
+                              ? "Bán hàng"
+                              : "Kết thúc"}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-1">
@@ -467,7 +481,9 @@ export default function AISettingsPage() {
                         </div>
                       </div>
                       <p className="text-sm mb-2">{template.content}</p>
-                      <div className="text-xs text-gray-500">Đã sử dụng: {template.usageCount} lần</div>
+                      <div className="text-xs text-gray-500">
+                        Đã sử dụng: {template.usageCount} lần
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -483,7 +499,9 @@ export default function AISettingsPage() {
                 <Sparkles className="h-5 w-5 text-blue-600 mr-2" />
                 Tùy chỉnh prompt
               </CardTitle>
-              <CardDescription>Tùy chỉnh prompt được sử dụng để tạo gợi ý trả lời</CardDescription>
+              <CardDescription>
+                Tùy chỉnh prompt được sử dụng để tạo gợi ý trả lời
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -515,8 +533,7 @@ Mỗi gợi ý nên có độ dài và phong cách khác nhau:
 Chỉ trả về 3 gợi ý, không thêm bất kỳ giải thích nào khác.`}
                   />
                   <p className="text-xs text-gray-500">
-                    Định dạng gợi ý xác định cách AI trả về các gợi ý. Thay đổi này sẽ ảnh hưởng đến cách hiển thị gợi
-                    ý.
+                    Định dạng gợi ý xác định cách AI trả về các gợi ý. Thay đổi này sẽ ảnh hưởng đến cách hiển thị gợi ý.
                   </p>
                 </div>
 
@@ -533,8 +550,7 @@ Chỉ trả về 3 gợi ý, không thêm bất kỳ giải thích nào khác.`}
 - Ghi chú: ${customer.notes}`}
                   />
                   <p className="text-xs text-gray-500">
-                    Bối cảnh khách hàng xác định thông tin khách hàng được sử dụng trong prompt. Sử dụng các biến{" "}
-                    {"{customer.field}"} để tham chiếu đến thông tin khách hàng.
+                    Bối cảnh khách hàng xác định thông tin khách hàng được sử dụng trong prompt. Sử dụng các biến {{customer.field}} để tham chiếu đến thông tin khách hàng.
                   </p>
                 </div>
 
@@ -547,8 +563,7 @@ Chỉ trả về 3 gợi ý, không thêm bất kỳ giải thích nào khác.`}
 ${conversation.history}`}
                   />
                   <p className="text-xs text-gray-500">
-                    Bối cảnh hội thoại xác định cách lịch sử hội thoại được sử dụng trong prompt. Sử dụng biến{" "}
-                    {"{conversation.history}"} để tham chiếu đến lịch sử hội thoại.
+                    Bối cảnh hội thoại xác định cách lịch sử hội thoại được sử dụng trong prompt. Sử dụng biến {{conversation.history}} để tham chiếu đến lịch sử hội thoại.
                   </p>
                 </div>
 
@@ -566,11 +581,13 @@ ${conversation.history}`}
         <TabsContent value="history">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center">
+              <CardTitle className="flex items-center">\
                 <RefreshCw className="h-5 w-5 text-blue-600 mr-2" />
                 Lịch sử sử dụng
               </CardTitle>
-              <CardDescription>Xem lịch sử sử dụng AI gợi ý trả lời</CardDescription>
+              <CardDescription>
+                Xem lịch sử sử dụng AI gợi ý trả lời
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -635,8 +652,12 @@ ${conversation.history}`}
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {new Date(Date.now() - i * 3600000).toLocaleString()}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Nhân viên {i}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Khách hàng {i}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              Nhân viên {i}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              Khách hàng {i}
+                            </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm">
                               <Badge
                                 variant="outline"

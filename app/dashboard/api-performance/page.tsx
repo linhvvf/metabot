@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic"
-
 import type { Metadata } from "next"
 import ApiPerformanceOverview from "@/components/dashboard/api-performance/api-performance-overview"
 

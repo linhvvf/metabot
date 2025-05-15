@@ -17,7 +17,7 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
-    // Xóa optimizeCss để tránh sử dụng critters
+    optimizeCss: true,
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
   headers: async () => {
@@ -64,7 +64,6 @@ const nextConfig = {
     ]
   },
   compress: true,
-  output: 'standalone', // Thay vì 'export'
 }
 
 export default nextConfig
