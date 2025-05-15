@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivElement>) {
+export function DateRangePicker({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(new Date().setDate(new Date().getDate() - 30)),
     to: new Date(),
@@ -55,11 +55,3 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
     </div>
   )
 }
-
-// Keep the original DateRangePicker function for backward compatibility
-export function DateRangePicker({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  return <DatePickerWithRange className={className} />
-}
-
-// Export DateRangePicker as default
-export default DateRangePicker

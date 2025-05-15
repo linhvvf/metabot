@@ -214,5 +214,3 @@ export default function SentimentOverview({ data, isLoading = false, onRefresh }
     </Card>
   )
 }
-
-export { default as SentimentOverview } from "./sentiment-overview"
