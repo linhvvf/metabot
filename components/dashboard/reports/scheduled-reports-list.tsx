@@ -1,31 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Calendar, MoreHorizontal, RefreshCw, Trash, UserCircle } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
-import { Badge } from "@/components/ui/badge"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import type { ReportSchedule, ReportType } from "@/lib/pdf-export/types"
 
 export default function ScheduledReportsList() {
@@ -41,13 +16,13 @@ export default function ScheduledReportsList() {
     try {
       setLoading(true)
       const response = await fetch("/api/reports/schedule")
-
+      
       if (!response.ok) {
         throw new Error("Không thể lấy danh sách lịch báo cáo")
       }
-
+      
       const result = await response.json()
-
+      
       if (result.success) {
         setSchedules(result.schedules)
       } else {
@@ -64,7 +39,11 @@ export default function ScheduledReportsList() {
     try {
       // Trong môi trường thực tế, đây là nơi gọi API để cập nhật trạng thái
       // Cập nhật tạm thời ở client-side
-      setSchedules((prev) => prev.map((schedule) => (schedule.id === id ? { ...schedule, active } : schedule)))
+      setSchedules(prev => 
+        prev.map(schedule => 
+          schedule.id === id ? { ...schedule, active } : schedule
+        )
+      )
     } catch (error) {
       console.error("Lỗi khi cập nhật trạng thái lịch báo cáo:", error)
     }
@@ -72,11 +51,11 @@ export default function ScheduledReportsList() {
 
   const deleteSchedule = async () => {
     if (!deleteScheduleId) return
-
+    
     try {
       // Trong môi trường thực tế, đây là nơi gọi API để xóa lịch báo cáo
       // Cập nhật tạm thời ở client-side
-      setSchedules((prev) => prev.filter((schedule) => schedule.id !== deleteScheduleId))
+      setSchedules(prev => prev.filter(schedule => schedule.id !== deleteScheduleId))
       setDeleteScheduleId(null)
     } catch (error) {
       console.error("Lỗi khi xóa lịch báo cáo:", error)
@@ -92,7 +71,7 @@ export default function ScheduledReportsList() {
       api_performance: "Hiệu suất API",
       staff_performance: "Hiệu suất nhân viên",
     }
-
+    
     return reportTypeNames[type] || "Không xác định"
   }
 
@@ -106,15 +85,19 @@ export default function ScheduledReportsList() {
       case "monthly":
         return `Ngày ${schedule.dayOfMonth} hàng tháng lúc ${schedule.time}`
       default:
+        return "Không xác định"  hàng tháng lúc ${schedule.time}`
+      default:
         return "Không xác định"
     }
   }
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader>\
         <CardTitle>Lịch báo cáo định kỳ</CardTitle>
-        <CardDescription>Quản lý các báo cáo được lập lịch gửi tự động</CardDescription>
+        <CardDescription>
+          Quản lý các báo cáo được lập lịch gửi tự động
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -191,7 +174,10 @@ export default function ScheduledReportsList() {
                         <DropdownMenuItem>Tạo bản sao</DropdownMenuItem>
                         <DropdownMenuItem>Chạy ngay</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600" onClick={() => setDeleteScheduleId(schedule.id)}>
+                        <DropdownMenuItem 
+                          className="text-red-600" 
+                          onClick={() => setDeleteScheduleId(schedule.id)}
+                        >
                           <Trash className="mr-2 h-4 w-4" />
                           Xóa lịch báo cáo
                         </DropdownMenuItem>

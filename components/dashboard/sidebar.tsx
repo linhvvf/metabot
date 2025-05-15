@@ -1,244 +1,169 @@
 "use client"
 
-import type React from "react"
-
-import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 import {
   BarChart3,
   Calendar,
-  CreditCard,
+  Clock,
+  Download,
   FileText,
+  HelpCircle,
   Home,
+  LayoutDashboard,
   MessageSquare,
   Settings,
   Users,
-  Tag,
-  Megaphone,
   Zap,
-  FileUp,
+  File,
+  Paperclip,
+  TrendingUp,
   Webhook,
-  Layers,
-  Gauge,
-  Code,
-  Globe,
+  KeyRound,
   Bell,
-  Sparkles,
 } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { useMobile } from "@/hooks/use-mobile"
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-export function Sidebar({ className }: SidebarProps) {
+export default function DashboardSidebar() {
   const pathname = usePathname()
-  const isMobile = useMobile()
-  const [isOpen, setIsOpen] = useState(true)
-
-  useEffect(() => {
-    if (isMobile) {
-      setIsOpen(false)
-    } else {
-      setIsOpen(true)
-    }
-  }, [isMobile])
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen)
-  }
 
   const routes = [
     {
-      label: "Dashboard",
-      icon: Home,
+      title: "Dashboard",
+      icon: LayoutDashboard,
       href: "/dashboard",
-      active: pathname === "/dashboard",
+      variant: "default",
     },
     {
-      label: "Cuộc hội thoại",
+      title: "Hội thoại",
       icon: MessageSquare,
       href: "/dashboard/conversations",
-      active: pathname === "/dashboard/conversations",
+      variant: "default",
     },
     {
-      label: "Khách hàng",
+      title: "Khách hàng",
       icon: Users,
       href: "/dashboard/customers",
-      active: pathname === "/dashboard/customers",
+      variant: "default",
     },
     {
-      label: "Nhân viên",
+      title: "Nhân viên",
       icon: Users,
       href: "/dashboard/staff",
-      active: pathname === "/dashboard/staff",
+      variant: "ghost",
     },
     {
-      label: "Chiến dịch",
-      icon: Megaphone,
+      title: "Chiến dịch",
+      icon: Zap,
       href: "/dashboard/campaigns",
-      active: pathname === "/dashboard/campaigns",
+      variant: "ghost",
     },
     {
-      label: "Khách hàng tiềm năng",
-      icon: Users,
-      href: "/dashboard/leads",
-      active: pathname === "/dashboard/leads",
-    },
-    {
-      label: "Lịch hẹn tin nhắn",
-      icon: Calendar,
-      href: "/dashboard/message-scheduler",
-      active: pathname === "/dashboard/message-scheduler",
-    },
-    {
-      label: "Mẫu tin nhắn",
-      icon: FileText,
+      title: "Mẫu tin nhắn",
+      icon: File,
       href: "/dashboard/message-templates",
-      active: pathname === "/dashboard/message-templates",
+      variant: "ghost",
     },
     {
-      label: "Mẫu AI",
-      icon: Sparkles,
-      href: "/dashboard/ai-templates",
-      active: pathname === "/dashboard/ai-templates",
-    },
-    {
-      label: "Tệp đính kèm",
-      icon: FileUp,
+      title: "Tệp đính kèm",
+      icon: Paperclip,
       href: "/dashboard/attachments",
-      active: pathname === "/dashboard/attachments",
+      variant: "ghost",
     },
     {
-      label: "Thẻ",
-      icon: Tag,
-      href: "/dashboard/tags",
-      active: pathname === "/dashboard/tags",
-    },
-    {
-      label: "Từ điển biệt ngữ",
-      icon: Globe,
-      href: "/dashboard/dialect-dictionary",
-      active: pathname === "/dashboard/dialect-dictionary",
-    },
-    {
-      label: "A/B Testing",
-      icon: Layers,
-      href: "/dashboard/ab-testing",
-      active: pathname === "/dashboard/ab-testing",
-    },
-    {
-      label: "Webhooks",
-      icon: Webhook,
-      href: "/dashboard/webhooks",
-      active: pathname === "/dashboard/webhooks",
-    },
-    {
-      label: "Quản lý API",
-      icon: Code,
-      href: "/dashboard/api-management",
-      active: pathname === "/dashboard/api-management",
-    },
-    {
-      label: "Hiệu suất API",
-      icon: Gauge,
-      href: "/dashboard/api-performance",
-      active: pathname === "/dashboard/api-performance",
-    },
-    {
-      label: "Báo cáo",
-      icon: BarChart3,
-      href: "/dashboard/reports",
-      active: pathname === "/dashboard/reports",
-    },
-    {
-      label: "Phân tích chiến dịch",
+      title: "Hiệu quả chiến dịch",
       icon: BarChart3,
       href: "/dashboard/campaign-analytics",
-      active: pathname === "/dashboard/campaign-analytics",
+      variant: "ghost",
     },
     {
-      label: "Xu hướng",
-      icon: BarChart3,
+      title: "Phân tích xu hướng",
+      icon: TrendingUp,
       href: "/dashboard/trends",
-      active: pathname === "/dashboard/trends",
+      variant: "ghost",
     },
     {
-      label: "Thông báo",
-      icon: Bell,
-      href: "/dashboard/notifications",
-      active: pathname === "/dashboard/notifications",
+      title: "Báo cáo",
+      icon: FileText,
+      href: "/dashboard/reports",
+      variant: "ghost",
     },
     {
-      label: "Cài đặt AI",
-      icon: Zap,
-      href: "/dashboard/ai-settings",
-      active: pathname === "/dashboard/ai-settings",
+      title: "Báo cáo tự động",
+      icon: Clock,
+      href: "/dashboard/reports/scheduled",
+      variant: "ghost",
     },
     {
-      label: "Cài đặt",
+      title: "Xuất báo cáo",
+      icon: Download,
+      href: "/dashboard/reports/export",
+      variant: "ghost",
+    },
+    {
+      title: "Webhooks",
+      href: "/dashboard/webhooks",
+      icon: Webhook,
+      variant: "default",
+    },
+    {
+      title: "Lịch hẹn",
+      icon: Calendar,
+      href: "/dashboard/calendar",
+      variant: "ghost",
+    },
+    {
+      title: "Hướng dẫn sử dụng",
+      icon: HelpCircle,
+      href: "/guide",
+      variant: "ghost",
+    },
+    {
+      title: "Cài đặt",
       icon: Settings,
       href: "/dashboard/settings",
-      active: pathname === "/dashboard/settings",
+      variant: "ghost",
     },
     {
-      label: "Thanh toán",
-      icon: CreditCard,
-      href: "/dashboard/billing",
-      active: pathname === "/dashboard/billing",
+      title: "API Management",
+      href: "/dashboard/api-management",
+      icon: KeyRound,
+      variant: "default",
+    },
+    {
+      title: "Thông báo",
+      href: "/dashboard/notifications",
+      icon: Bell,
+      variant: "default",
     },
   ]
 
   return (
-    <>
-      {isMobile && (
-        <Button
-          variant="outline"
-          size="icon"
-          className="fixed bottom-4 right-4 z-50 rounded-full shadow-lg"
-          onClick={toggleSidebar}
-        >
-          {isOpen ? <MessageSquare className="h-5 w-5" /> : <MessageSquare className="h-5 w-5" />}
-        </Button>
-      )}
-      <div
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r bg-background transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-0" : "-translate-x-full",
-          isMobile ? "shadow-lg" : "",
-          className,
-        )}
-      >
-        <div className="flex h-14 items-center border-b px-4">
-          <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
-            <Zap className="h-5 w-5 text-primary" />
-            <span>Metabot.vn</span>
-          </Link>
-        </div>
-        <ScrollArea className="flex-1 py-2">
-          <nav className="grid gap-1 px-2">
-            {routes.map((route) => (
-              <Link
-                key={route.href}
-                href={route.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                  route.active ? "bg-accent text-accent-foreground" : "transparent",
-                )}
-              >
-                <route.icon className="h-4 w-4" />
-                {route.label}
-              </Link>
-            ))}
-          </nav>
-        </ScrollArea>
+    <div className="flex flex-col h-full">
+      <div className="flex h-14 items-center border-b px-4">
+        <Link href="/" className="flex items-center gap-2 font-semibold">
+          <Home className="h-6 w-6" />
+          <span>Metabot.vn</span>
+        </Link>
       </div>
-    </>
+      <div className="flex-1 overflow-auto py-2">
+        <nav className="grid items-start px-2 gap-1">
+          {routes.map((route, index) => (
+            <Link
+              key={index}
+              href={route.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary",
+                route.variant === "default" ? "font-medium" : "font-normal",
+                pathname === route.href ? "bg-muted text-primary" : "text-muted-foreground hover:bg-muted",
+              )}
+            >
+              <route.icon className="h-4 w-4" />
+              <span>{route.title}</span>
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </div>
   )
 }
-
-// Đổi tên và export default
-export const DashboardSidebar = Sidebar
-export default DashboardSidebar

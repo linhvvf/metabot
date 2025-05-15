@@ -17,13 +17,13 @@ export default function CampaignFilters() {
   const [channel, setChannel] = useState("")
   const [date, setDate] = useState<Date>()
   const [showFilters, setShowFilters] = useState(false)
-
+  
   const handleReset = () => {
     setSearchTerm("")
     setChannel("")
     setDate(undefined)
   }
-
+  
   return (
     <div className="flex flex-col sm:flex-row gap-2">
       <div className="relative flex-1">
@@ -47,7 +47,7 @@ export default function CampaignFilters() {
           </Button>
         )}
       </div>
-
+      
       <div className="flex gap-2">
         <Select value={channel} onValueChange={setChannel}>
           <SelectTrigger className="w-[180px]">
@@ -60,22 +60,30 @@ export default function CampaignFilters() {
             <SelectItem value="multi">Đa kênh</SelectItem>
           </SelectContent>
         </Select>
-
+        
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className={cn("w-[180px] justify-start text-left font-normal", !date && "text-muted-foreground")}
+              className={cn(
+                "w-[180px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {date ? format(date, "dd/MM/yyyy", { locale: vi }) : <span>Chọn ngày</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              initialFocus
+            />
           </PopoverContent>
         </Popover>
-
+        
         <Popover open={showFilters} onOpenChange={setShowFilters}>
           <PopoverTrigger asChild>
             <Button variant="outline" size="icon">
@@ -94,9 +102,9 @@ export default function CampaignFilters() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Tất cả</SelectItem>
-                    <SelectItem value="high">Cao (&gt;50%)</SelectItem>
+                    <SelectItem value="high">Cao (>50%)</SelectItem>
                     <SelectItem value="medium">Trung bình (25-50%)</SelectItem>
-                    <SelectItem value="low">Thấp (&lt;25%)</SelectItem>
+                    <SelectItem value="low">Thấp (<25%)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

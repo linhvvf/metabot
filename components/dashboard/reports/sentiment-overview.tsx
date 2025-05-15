@@ -13,7 +13,7 @@ interface SentimentOverviewProps {
   onRefresh?: () => void
 }
 
-export function SentimentOverview({ data, isLoading = false, onRefresh }: SentimentOverviewProps) {
+export default function SentimentOverview({ data, isLoading = false, onRefresh }: SentimentOverviewProps) {
   const [activeTab, setActiveTab] = useState("overview")
 
   // Mock data for preview/testing
@@ -149,7 +149,7 @@ export function SentimentOverview({ data, isLoading = false, onRefresh }: Sentim
               <div className="pt-4 border-t border-gray-100">
                 <h3 className="text-sm font-medium mb-3">Cảm xúc phổ biến</h3>
                 <div className="flex flex-wrap gap-2">
-                  {displayData.commonEmotions.map((emotion: string, index: number) => (
+                  {displayData.commonEmotions.map((emotion, index) => (
                     <Badge key={index} variant="outline" className="px-2 py-1">
                       {emotion}
                     </Badge>
@@ -160,7 +160,7 @@ export function SentimentOverview({ data, isLoading = false, onRefresh }: Sentim
               <div className="pt-4 border-t border-gray-100">
                 <h3 className="text-sm font-medium mb-3">Vấn đề chính</h3>
                 <div className="space-y-2">
-                  {displayData.topIssues.map((issue: string, index: number) => (
+                  {displayData.topIssues.map((issue, index) => (
                     <div key={index} className="flex items-start">
                       <span className="h-5 w-5 text-xs flex items-center justify-center rounded-full bg-gray-100 mr-2">
                         {index + 1}
@@ -183,7 +183,7 @@ export function SentimentOverview({ data, isLoading = false, onRefresh }: Sentim
               <div className="pt-4 border-t border-gray-100">
                 <h3 className="text-sm font-medium mb-3">Phân tích chi tiết</h3>
                 <div className="space-y-3">
-                  {displayData.actionableInsights.map((insight: string, index: number) => (
+                  {displayData.actionableInsights.map((insight, index) => (
                     <div key={index} className="flex items-start bg-white p-3 rounded-md border">
                       <ThumbsUp className="h-4 w-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
                       <span className="text-sm">{insight}</span>
@@ -198,7 +198,7 @@ export function SentimentOverview({ data, isLoading = false, onRefresh }: Sentim
             <div>
               <h3 className="text-sm font-medium mb-3">Hành động đề xuất</h3>
               <div className="space-y-3">
-                {displayData.recommendedActions.map((action: string, index: number) => (
+                {displayData.recommendedActions.map((action, index) => (
                   <div key={index} className="bg-white p-3 rounded-md border flex items-start">
                     <div className="h-5 w-5 text-xs flex items-center justify-center rounded-full bg-blue-100 text-blue-800 mr-2 flex-shrink-0">
                       {index + 1}
@@ -215,7 +215,4 @@ export function SentimentOverview({ data, isLoading = false, onRefresh }: Sentim
   )
 }
 
-// Export component as named export
-export default function SentimentOverviewComponent(props: SentimentOverviewProps) {
-  return <SentimentOverview {...props} />
-}
+export { default as SentimentOverview } from "./sentiment-overview"

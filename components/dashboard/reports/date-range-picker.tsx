@@ -11,74 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-interface DatePickerWithRangeProps {
-  className?: string
-  value?: DateRange
-  onChange?: (date: DateRange | undefined) => void
-}
-
-export function DatePickerWithRange({ className, value, onChange }: DatePickerWithRangeProps) {
-  const [date, setDate] = React.useState<DateRange | undefined>(
-    value || {
-      from: new Date(new Date().setDate(new Date().getDate() - 30)),
-      to: new Date(),
-    },
-  )
-
-  React.useEffect(() => {
-    if (value) {
-      setDate(value)
-    }
-  }, [value])
-
-  const handleSelect = (selectedDate: DateRange | undefined) => {
-    setDate(selectedDate)
-    if (onChange) {
-      onChange(selectedDate)
-    }
-  }
-
-  return (
-    <div className={cn("grid gap-2", className)}>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            id="date"
-            variant={"outline"}
-            className={cn("w-[250px] justify-start text-left font-normal", !date && "text-muted-foreground")}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "dd/MM/yyyy")} - {format(date.to, "dd/MM/yyyy")}
-                </>
-              ) : (
-                format(date.from, "dd/MM/yyyy")
-              )
-            ) : (
-              <span>Chọn khoảng thời gian</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={handleSelect}
-            numberOfMonths={2}
-            locale={vi}
-          />
-        </PopoverContent>
-      </Popover>
-    </div>
-  )
-}
-
-// Đổi tên và export default
-export function DateRangePicker({ className }: React.HTMLAttributes<HTMLDivElement>) {
+export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(new Date().setDate(new Date().getDate() - 30)),
     to: new Date(),
@@ -123,4 +56,10 @@ export function DateRangePicker({ className }: React.HTMLAttributes<HTMLDivEleme
   )
 }
 
+// Keep the original DateRangePicker function for backward compatibility
+export function DateRangePicker({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  return <DatePickerWithRange className={className} />
+}
+
+// Export DateRangePicker as default
 export default DateRangePicker

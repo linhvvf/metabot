@@ -205,7 +205,7 @@ export default function AdvancedSentimentAnalysis({
       </div>
 
       <Tabs defaultValue="sentiment">
-        <TabsList className="mb-4 w-full grid grid-cols-6">
+        <TabsList className="mb-4 w-full grid grid-cols-5">
           <TabsTrigger value="sentiment" className="flex-1">
             Cảm xúc
           </TabsTrigger>
@@ -217,9 +217,6 @@ export default function AdvancedSentimentAnalysis({
           </TabsTrigger>
           <TabsTrigger value="cultural" className="flex-1">
             Văn hóa
-          </TabsTrigger>
-          <TabsTrigger value="language" className="flex-1">
-            Ngôn ngữ
           </TabsTrigger>
           <TabsTrigger value="insights" className="flex-1">
             Gợi ý
@@ -553,67 +550,6 @@ export default function AdvancedSentimentAnalysis({
           ) : (
             <div className="text-center py-4 text-gray-500">
               <p>Chọn một tin nhắn để phân tích ngữ cảnh văn hóa</p>
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="language">
-          {isLoading ? (
-            <div className="space-y-3">
-              <Skeleton className="h-12 w-full" />
-              <Skeleton className="h-16 w-full" />
-              <Skeleton className="h-12 w-full" />
-            </div>
-          ) : error ? (
-            <div className="text-center py-4 text-red-600">
-              <p>{error}</p>
-            </div>
-          ) : analysis?.culturalInsights ? (
-            <div className="space-y-4">
-              {analysis.culturalInsights.localExpressions?.length > 0 && (
-                <div className="bg-white p-3 rounded-md border border-gray-200">
-                  <div className="text-sm font-medium mb-2">Biểu đạt địa phương</div>
-                  <div className="flex flex-wrap gap-2">
-                    {analysis.culturalInsights.localExpressions.map((expression: string, index: number) => (
-                      <Badge key={index} variant="outline" className="bg-green-50 border-green-200">
-                        {expression}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="p-3 bg-muted rounded-md flex items-start gap-2">
-                <Languages className="h-5 w-5 text-purple-500 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium">Đặc điểm ngôn ngữ</p>
-                  <div className="text-sm text-muted-foreground mt-1">
-                    {analysis.languageFeatures?.tone && (
-                      <div className="mb-1">
-                        <span className="font-medium">Giọng điệu:</span> {analysis.languageFeatures.tone}
-                      </div>
-                    )}
-                    {analysis.languageFeatures?.complexity && (
-                      <div>
-                        <span className="font-medium">Độ phức tạp:</span> {analysis.languageFeatures.complexity}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-center mt-4">
-                <button
-                  className="text-sm text-indigo-600 flex items-center gap-1 px-3 py-1 rounded-md bg-indigo-50 hover:bg-indigo-100"
-                  onClick={() => (window.location.href = "#dialect-analysis")}
-                >
-                  <span>Xem phân tích ngôn ngữ địa phương chi tiết</span> <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-4 text-gray-500">
-              <p>Phân tích ngôn ngữ địa phương không khả dụng cho tin nhắn này</p>
             </div>
           )}
         </TabsContent>

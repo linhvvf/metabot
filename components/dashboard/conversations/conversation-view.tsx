@@ -11,7 +11,6 @@ import SentimentAnalysisPanel from "./sentiment-analysis-panel"
 import AiSuggestionPanel from "./ai-suggestion-panel"
 import AdvancedSentimentAnalysis from "./advanced-sentiment-analysis"
 import { Send, BarChart2, Brain, Lightbulb, PanelRightOpen, PanelRightClose, MessageSquare } from "lucide-react"
-import { DialectAnalysisPanel } from "./dialect-analysis-panel"
 
 export function ConversationView({ conversation = null, showAnalysis = true }) {
   const [message, setMessage] = useState("")
@@ -20,7 +19,6 @@ export function ConversationView({ conversation = null, showAnalysis = true }) {
   const [showAiPanel, setShowAiPanel] = useState(true)
   const [showSentimentPanel, setShowSentimentPanel] = useState(true)
   const [showAnalysisPanel, setShowAnalysisPanel] = useState(showAnalysis)
-  const [showDialectAnalysis, setShowDialectAnalysis] = useState(false)
 
   const mockConversation = {
     id: "conv123",
@@ -88,10 +86,6 @@ export function ConversationView({ conversation = null, showAnalysis = true }) {
 
   const handleUseSuggestion = (suggestion) => {
     setMessage(suggestion)
-  }
-
-  const handleDialectAnalysisToggle = () => {
-    setShowDialectAnalysis((prev) => !prev)
   }
 
   return (
@@ -249,14 +243,6 @@ export function ConversationView({ conversation = null, showAnalysis = true }) {
                   />
                 )}
               </>
-            )}
-            {showDialectAnalysis && (
-              <DialectAnalysisPanel
-                message={selectedMessage?.content || ""}
-                conversation={currentConversation.messages}
-                isVisible={showDialectAnalysis}
-                onResponseSelect={handleUseSuggestion}
-              />
             )}
           </ScrollArea>
         </div>

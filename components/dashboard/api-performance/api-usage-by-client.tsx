@@ -1,222 +1,175 @@
 "use client"
 
-import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { ArrowUpDown, BarChart } from "lucide-react"
-import { Progress } from "@/components/ui/progress"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ResponsiveChartContainer } from "@/components/ui/responsive-chart-container"
+import { Badge } from "@/components/ui/badge"
+import { BarChart, RefreshCw, Users } from "lucide-react"
 
 interface ApiUsageByClientProps {
-  dateRange: {
-    from: Date
-    to: Date
-  }
-  filters: {
-    endpoints: string[]
-    statusCodes: string[]
-    clients: string[]
-  }
+  data?: any
+  isLoading?: boolean
+  onRefresh?: () => void
 }
 
-export default function ApiUsageByClient({ dateRange, filters }: ApiUsageByClientProps) {
-  const [sortBy, setSortBy] = useState<string>("requests")
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
-
-  // Trong thực tế, dữ liệu này sẽ được lấy từ API dựa trên dateRange và filters
-  const clients = [
-    {
-      clientId: "mobile-app-123",
-      name: "Ứng dụng di động",
-      requests: 580000,
-      successRate: 99.7,
-      avgResponseTime: 165,
-      bandwidth: 12.5,
-      lastActive: new Date(2023, 5, 10, 14, 32, 15),
+export default function ApiUsageByClient({ data, isLoading = false, onRefresh }: ApiUsageByClientProps) {
+  // Mock data for preview/testing
+  const mockData = {
+    topClients: [
+      { name: "Mobile App", requests: 45600, bandwidth: 1250 },
+      { name: "Web Dashboard", requests: 32400, bandwidth: 890 },
+      { name: "Partner API", requests: 18900, bandwidth: 520 },
+      { name: "Internal Tools", requests: 12300, bandwidth: 340 },
+      { name: "Integration Services", requests: 8700, bandwidth: 240 },
+    ],
+    clientDistribution: {
+      byRequests: [
+        { name: "Mobile App", value: 38 },
+        { name: "Web Dashboard", value: 27 },
+        { name: "Partner API", value: 16 },
+        { name: "Internal Tools", value: 10 },
+        { name: "Integration Services", value: 7 },
+        { name: "Others", value: 2 },
+      ],
+      byBandwidth: [
+        { name: "Mobile App", value: 42 },
+        { name: "Web Dashboard", value: 30 },
+        { name: "Partner API", value: 14 },
+        { name: "Internal Tools", value: 8 },
+        { name: "Integration Services", value: 5 },
+        { name: "Others", value: 1 },
+      ],
     },
-    {
-      clientId: "web-dashboard-456",
-      name: "Bảng điều khiển web",
-      requests: 420000,
-      successRate: 99.8,
-      avgResponseTime: 210,
-      bandwidth: 8.2,
-      lastActive: new Date(2023, 5, 10, 14, 30, 45),
-    },
-    {
-      clientId: "partner-api-789",
-      name: "API đối tác",
-      requests: 180000,
-      successRate: 99.5,
-      avgResponseTime: 230,
-      bandwidth: 4.7,
-      lastActive: new Date(2023, 5, 10, 14, 25, 10),
-    },
-    {
-      clientId: "internal-tools-012",
-      name: "Công cụ nội bộ",
-      requests: 120000,
-      successRate: 99.9,
-      avgResponseTime: 120,
-      bandwidth: 3.1,
-      lastActive: new Date(2023, 5, 10, 14, 20, 30),
-    },
-    {
-      clientId: "public-api-345",
-      name: "API công khai",
-      requests: 85000,
-      successRate: 98.5,
-      avgResponseTime: 280,
-      bandwidth: 2.8,
-      lastActive: new Date(2023, 5, 10, 14, 15, 20),
-    },
-  ]
-
-  const handleSort = (column: string) => {
-    if (sortBy === column) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-    } else {
-      setSortBy(column)
-      setSortOrder("desc")
-    }
+    clientGrowth: [
+      { name: "Mobile App", growth: 12.5 },
+      { name: "Web Dashboard", growth: 8.3 },
+      { name: "Partner API", growth: 15.7 },
+      { name: "Internal Tools", growth: -2.1 },
+      { name: "Integration Services", growth: 22.4 },
+    ],
   }
 
-  const sortedClients = [...clients].sort((a, b) => {
-    const aValue = a[sortBy as keyof typeof a]
-    const bValue = b[sortBy as keyof typeof b]
-
-    if (typeof aValue === "number" && typeof bValue === "number") {
-      return sortOrder === "asc" ? aValue - bValue : bValue - aValue
-    }
-
-    if (aValue instanceof Date && bValue instanceof Date) {
-      return sortOrder === "asc" ? aValue.getTime() - bValue.getTime() : bValue.getTime() - aValue.getTime()
-    }
-
-    if (typeof aValue === "string" && typeof bValue === "string") {
-      return sortOrder === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
-    }
-
-    return 0
-  })
-
-  const formatNumber = (num: number) => {
-    return num.toLocaleString("vi-VN")
-  }
-
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat("vi-VN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(date)
-  }
+  // Use mock data if no data is provided
+  const displayData = data || mockData
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Sử dụng API theo khách hàng</CardTitle>
-        <CardDescription>Chi tiết sử dụng API của từng khách hàng</CardDescription>
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Sử dụng API theo khách hàng</CardTitle>
+            <CardDescription>Phân tích lưu lượng API theo ứng dụng khách hàng</CardDescription>
+          </div>
+          {onRefresh && (
+            <button onClick={onRefresh} className="p-1 rounded-full hover:bg-gray-100" disabled={isLoading}>
+              <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+            </button>
+          )}
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">
-                  <Button variant="ghost" onClick={() => handleSort("name")} className="px-0 font-medium">
-                    Khách hàng
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button variant="ghost" onClick={() => handleSort("requests")} className="px-0 font-medium">
-                    Yêu cầu
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button variant="ghost" onClick={() => handleSort("successRate")} className="px-0 font-medium">
-                    Tỷ lệ thành công
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button variant="ghost" onClick={() => handleSort("avgResponseTime")} className="px-0 font-medium">
-                    Thời gian TB (ms)
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button variant="ghost" onClick={() => handleSort("bandwidth")} className="px-0 font-medium">
-                    Băng thông (GB)
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button variant="ghost" onClick={() => handleSort("lastActive")} className="px-0 font-medium">
-                    Hoạt động gần đây
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead className="w-[50px]"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sortedClients.map((client) => (
-                <TableRow key={client.clientId}>
-                  <TableCell className="font-medium">
-                    <div className="flex flex-col">
-                      <span>{client.name}</span>
-                      <span className="text-xs text-muted-foreground">{client.clientId}</span>
+        <Tabs defaultValue="top-clients">
+          <TabsList className="mb-4 w-full">
+            <TabsTrigger value="top-clients" className="flex-1">
+              Khách hàng hàng đầu
+            </TabsTrigger>
+            <TabsTrigger value="distribution" className="flex-1">
+              Phân phối
+            </TabsTrigger>
+            <TabsTrigger value="growth" className="flex-1">
+              Tăng trưởng
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="top-clients">
+            <div className="space-y-4">
+              {displayData.topClients.map((client: any, index: number) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                  <div className="flex items-center">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                      <Users className="h-4 w-4 text-primary" />
                     </div>
-                  </TableCell>
-                  <TableCell>{formatNumber(client.requests)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={
-                          client.successRate < 99
-                            ? "text-destructive"
-                            : client.successRate < 99.5
-                              ? "text-amber-500"
-                              : ""
-                        }
-                      >
-                        {client.successRate}%
-                      </span>
-                      <Progress
-                        value={client.successRate}
-                        className="h-2 w-16"
-                        indicatorClassName={
-                          client.successRate < 99
-                            ? "bg-destructive"
-                            : client.successRate < 99.5
-                              ? "bg-amber-500"
-                              : undefined
-                        }
-                      />
+                    <div>
+                      <p className="font-medium">{client.name}</p>
+                      <p className="text-xs text-muted-foreground">{client.bandwidth.toLocaleString()} MB sử dụng</p>
                     </div>
-                  </TableCell>
-                  <TableCell>{client.avgResponseTime} ms</TableCell>
-                  <TableCell>{client.bandwidth} GB</TableCell>
-                  <TableCell>{formatDate(client.lastActive)}</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon" asChild>
-                      <a href={`#client-details-${client.clientId}`}>
-                        <BarChart className="h-4 w-4" />
-                        <span className="sr-only">Xem chi tiết</span>
-                      </a>
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-medium">{client.requests.toLocaleString()}</p>
+                    <p className="text-xs text-muted-foreground">yêu cầu</p>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
-        </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="distribution">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-sm font-medium mb-3">Phân phối theo yêu cầu</h3>
+                <ResponsiveChartContainer className="h-64">
+                  <div className="flex h-full items-center justify-center">
+                    <div className="flex flex-col items-center">
+                      <BarChart className="h-8 w-8 text-muted-foreground mb-2" />
+                      <p className="text-sm text-muted-foreground">Biểu đồ phân phối theo yêu cầu</p>
+                    </div>
+                  </div>
+                </ResponsiveChartContainer>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {displayData.clientDistribution.byRequests.map((item: any, index: number) => (
+                    <Badge key={index} variant="outline" className="px-2 py-1">
+                      {item.name}: {item.value}%
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium mb-3">Phân phối theo băng thông</h3>
+                <ResponsiveChartContainer className="h-64">
+                  <div className="flex h-full items-center justify-center">
+                    <div className="flex flex-col items-center">
+                      <BarChart className="h-8 w-8 text-muted-foreground mb-2" />
+                      <p className="text-sm text-muted-foreground">Biểu đồ phân phối theo băng thông</p>
+                    </div>
+                  </div>
+                </ResponsiveChartContainer>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {displayData.clientDistribution.byBandwidth.map((item: any, index: number) => (
+                    <Badge key={index} variant="outline" className="px-2 py-1">
+                      {item.name}: {item.value}%
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="growth">
+            <div className="space-y-4">
+              {displayData.clientGrowth.map((client: any, index: number) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                  <div className="flex items-center">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                      <Users className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{client.name}</p>
+                      <p className="text-xs text-muted-foreground">So với tháng trước</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={`font-medium ${client.growth >= 0 ? "text-green-600" : "text-red-600"}`}>
+                      {client.growth >= 0 ? "+" : ""}
+                      {client.growth}%
+                    </p>
+                    <p className="text-xs text-muted-foreground">tăng trưởng</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   )

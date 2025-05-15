@@ -78,6 +78,13 @@
   }
 }
 
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
 @layer base {
   * {
     @apply border-border;
